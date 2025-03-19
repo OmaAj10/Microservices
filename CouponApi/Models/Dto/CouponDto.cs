@@ -1,6 +1,6 @@
 namespace CouponApi.Models.Dto;
 
-public class CuoponDto
+public class CouponDto
 {
     public int CouponId { get; set; }
     public string CouponCode { get; set; }
