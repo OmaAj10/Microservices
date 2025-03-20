@@ -4,10 +4,13 @@ using Web.Utility;
 
 namespace Web.Service;
 
-public class CoupoonService : ICouponService
+public class CouponService : ICouponService
 {
     private readonly IBaseService _baseService;
-    
+    public CouponService(IBaseService baseService)
+    {
+        _baseService = baseService;
+    }
     public async Task<ResponseDto?> GetCouponAsync(string cuponCode)
     {
         return await _baseService.SendAsync(new RequestDto()
@@ -17,7 +20,7 @@ public class CoupoonService : ICouponService
         });
     }
 
-    public async Task<ResponseDto?> GetAllCouponAsync()
+    public async Task<ResponseDto?> GetAllCouponsAsync()
     {
         return await _baseService.SendAsync(new RequestDto()
         {
@@ -41,7 +44,7 @@ public class CoupoonService : ICouponService
         {
             ApiType = StaticDetails.ApiType.POST,
             Data = couponDto,
-            Url = StaticDetails.CouponAPIBase + $"/api/coupon/",
+            Url = StaticDetails.CouponAPIBase + $"/api/coupon",
         });
     }
 
@@ -51,7 +54,7 @@ public class CoupoonService : ICouponService
         {
             ApiType = StaticDetails.ApiType.PUt,
             Data = couponDto,
-            Url = StaticDetails.CouponAPIBase + $"/api/coupon/",
+            Url = StaticDetails.CouponAPIBase + $"/api/coupon",
         });
     }
 

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CouponApi.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/coupon")]
 [ApiController]
 public class CouponApiController : Controller
 {
