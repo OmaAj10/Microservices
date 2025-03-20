@@ -32,7 +32,7 @@ public class CouponApiController : Controller
         }
         catch (Exception e)
         {
-            _response.isSuccess = false;
+            _response.IsSuccess = false;
             _response.Message = e.Message;
         }
 
@@ -50,7 +50,7 @@ public class CouponApiController : Controller
         }
         catch (Exception e)
         {
-            _response.isSuccess = false;
+            _response.IsSuccess = false;
             _response.Message = e.Message;
         }
 
@@ -67,13 +67,13 @@ public class CouponApiController : Controller
 
             if (obj == null)
             {
-                _response.isSuccess = false;
+                _response.IsSuccess = false;
             } 
             _response.Result = _mapper.Map<CouponDto>(obj);
         }
         catch (Exception e)
         {
-            _response.isSuccess = false;
+            _response.IsSuccess = false;
             _response.Message = e.Message;
         }
 
@@ -93,7 +93,7 @@ public class CouponApiController : Controller
         }
         catch (Exception e)
         {
-            _response.isSuccess = false;
+            _response.IsSuccess = false;
             _response.Message = e.Message;
         }
         
@@ -113,7 +113,7 @@ public class CouponApiController : Controller
         }
         catch (Exception e)
         {
-            _response.isSuccess = false;
+            _response.IsSuccess = false;
             _response.Message = e.Message;
         }
 
@@ -131,7 +131,7 @@ public class CouponApiController : Controller
         }
         catch (Exception e)
         {
-            _response.isSuccess = false;
+            _response.IsSuccess = false;
             _response.Message = e.Message;
         }
 
