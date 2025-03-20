@@ -1,7 +1,17 @@
+using Web.Service;
+using Web.Service.IService;
+using Web.Utility;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient();
+builder.Services.AddHttpClient<ICouponService, CoupoonService>();
+StaticDetails.CouponAPIBase = builder.Configuration["ServiceUrls:CouponAPIBase"];
+builder.Services.AddScoped<IBaseService, BaseService>();
+builder.Services.AddScoped<ICouponService, CoupoonService>();
 
 var app = builder.Build();
 

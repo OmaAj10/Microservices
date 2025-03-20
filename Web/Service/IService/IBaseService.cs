@@ -4,5 +4,5 @@ namespace Web.Service.IService;
 
 public interface IBaseService
 {
-    Task<ResponseDto?> SendAsync(RequestDto dto);
+   Task<ResponseDto?> SendAsync(RequestDto dto);
 }
