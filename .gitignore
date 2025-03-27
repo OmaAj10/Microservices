@@ -483,3 +483,4 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 CouponApi/appsettings.json
+AuthApi/appsettings.json
