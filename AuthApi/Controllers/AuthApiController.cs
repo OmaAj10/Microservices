@@ -9,7 +9,7 @@ namespace AuthApi.Controllers;
 public class AuthApiController : Controller
 {
     private readonly IAuthService _authService;
-    protected readonly ResponseDto _responseDto;
+    protected ResponseDto _responseDto;
 
     public AuthApiController(IAuthService authService)
     {
@@ -44,6 +44,20 @@ public class AuthApiController : Controller
         }
 
         _responseDto.Result = loginResponse;
+        return Ok(_responseDto);
+    }
+    
+    [HttpPost("AssignRole")]
+    public async Task<IActionResult> AssignRole([FromBody]RegistrationRequestDto registrationRequestDto)
+    {
+        var assignRoleSuccessful = await _authService.AssignRole(registrationRequestDto.Email, registrationRequestDto.Role.ToUpper());
+
+        if (!assignRoleSuccessful)
+        {
+            _responseDto.IsSuccess = false;
+            _responseDto.Message = "Username or password is incorrect.";
+            return BadRequest(_responseDto);
+        }
         return Ok(_responseDto);
     }
 }
