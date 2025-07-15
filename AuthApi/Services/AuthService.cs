@@ -2,6 +2,7 @@ using AuthApi.Data;
 using AuthApi.Models;
 using AuthApi.Models.Dto;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace AuthApi.Services;
 
@@ -60,6 +61,31 @@ public class AuthService : IAuthService
 
     public async Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
     {
-        throw new NotImplementedException();
+        var user = await _db.ApplicationUsers.FirstOrDefaultAsync(u =>
+            u.UserName.ToLower() == loginRequestDto.Username.ToLower());
+
+        bool isValid = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
+
+        if (user == null || isValid == false)
+        {
+            return new LoginResponseDto() {UserDto = null, Token = ""};
+        }
+        
+        //if user was found, generat JWT Token
+
+        UserDto userDto = new()
+        {
+            Id = user.Id,
+            Email = user.Email,
+            Name = user.Name,
+            PhoneNumber = user.PhoneNumber
+        };
+
+        LoginResponseDto loginResponseDto = new()
+        {
+            UserDto = userDto,
+            Token = ""
+        };
+        return loginResponseDto;
     }
 }
