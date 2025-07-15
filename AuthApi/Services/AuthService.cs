@@ -11,12 +11,14 @@ public class AuthService : IAuthService
     private readonly AppDbContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly IJwtTokeGenerator _jwtTokeGenerator;
 
-    public AuthService(AppDbContext db, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+    public AuthService(AppDbContext db, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IJwtTokeGenerator jwtTokeGenerator)
     {
         _db = db;
         _userManager = userManager;
         _roleManager = roleManager;
+        _jwtTokeGenerator = jwtTokeGenerator;
     }
     
     public async Task<string> Register(RegistrationRequestDto registrationRequestDto)
@@ -71,7 +73,7 @@ public class AuthService : IAuthService
             return new LoginResponseDto() {UserDto = null, Token = ""};
         }
         
-        //if user was found, generat JWT Token
+        var token = _jwtTokeGenerator.GenerateToken(user);
 
         UserDto userDto = new()
         {
@@ -84,7 +86,7 @@ public class AuthService : IAuthService
         LoginResponseDto loginResponseDto = new()
         {
             UserDto = userDto,
-            Token = ""
+            Token = token
         };
         return loginResponseDto;
     }
