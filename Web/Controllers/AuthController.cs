@@ -1,6 +1,7 @@
 using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using Web.Models;
 using Web.Models.Dto;
 using Web.Service.IService;
@@ -22,6 +23,25 @@ public class AuthController : Controller
     {
         LoginRequestDto loginRequestDto = new();
         return View(loginRequestDto);
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> Login(LoginRequestDto loginRequestDto)
+    {
+        ResponseDto responseDto = await _authService.LoginAsync(loginRequestDto);
+        
+        if (responseDto != null && responseDto.IsSuccess)
+        {
+            LoginResponseDto loginResponseDto =
+                JsonConvert.DeserializeObject<LoginResponseDto>(Convert.ToString(responseDto.Result));
+            
+            return RedirectToAction("Index", "Home");
+        }
+        else
+        {
+            ModelState.AddModelError("CustomerError", responseDto.Message);
+            return View(loginRequestDto);
+        }
     }
     
     [HttpGet]
