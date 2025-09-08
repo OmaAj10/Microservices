@@ -2,10 +2,14 @@ using Web.Utility;
 
 namespace Web.Service.IService;
 
-public class TokeProvider : ITokeProvider
+public class TokenProvider : ITokenProvider
 {
-    
     private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public TokenProvider(IHttpContextAccessor httpContextAccessor)
+    {
+        _httpContextAccessor = httpContextAccessor;
+    }
     
     public void SetToken(string token)
     {
